@@ -5,6 +5,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Hello, Lorem"),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.settings))
+        ],
+      ),
+    );
   }
 }

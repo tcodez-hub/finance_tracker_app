@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
+  google_fonts: ^6.2.1
   hive_ce: ^2.10.1
   hive_ce_flutter: ^2.2.0
 
