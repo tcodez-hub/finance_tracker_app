@@ -17,6 +17,12 @@ final ThemeData lightTheme = ThemeData(
 
     surface: Color(0xFFF2EFE7), // Off-White Background
     onSurface: Colors.black,
+    surfaceContainer: Colors.white,
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    foregroundColor: Color(0xFFF2EFE7),
+    backgroundColor: Color(0xFF2973B2),
+    shape: CircleBorder(),
   ),
 
   // 🎯 IconButton Theme
@@ -24,7 +30,7 @@ final ThemeData lightTheme = ThemeData(
     style: ButtonStyle(
       foregroundColor: WidgetStateProperty.all(Color(0xFF2973B2)), // Primary color
       backgroundColor: WidgetStateProperty.all(Colors.transparent), // No background
-      overlayColor: WidgetStateProperty.all(Color(0x802973B2)), // Light blue on press
+      overlayColor: WidgetStateProperty.all(Color(0xFF48A6A7)), // Light blue on press
     ),
   ),
 
@@ -51,19 +57,37 @@ final ThemeData lightTheme = ThemeData(
       }),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       side: WidgetStateProperty.all(BorderSide(style: BorderStyle.none)),
-      shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
       padding: WidgetStateProperty.all(EdgeInsets.all(4)),
     ),
   ),
 
   // ✏️ Text Theme
   textTheme: TextTheme(
-    displayLarge: GoogleFonts.poppins(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
-    displayMedium: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-    displaySmall: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+    displayLarge: GoogleFonts.poppins(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+    displayMedium: GoogleFonts.poppins(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+    displaySmall: GoogleFonts.poppins(
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    ),
 
     titleLarge: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
-    titleMedium: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+    titleMedium: GoogleFonts.poppins(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+    ),
 
     bodyLarge: GoogleFonts.poppins(fontSize: 14, color: Colors.black),
     bodyMedium: GoogleFonts.poppins(fontSize: 12, color: Colors.black54),
@@ -103,12 +127,28 @@ final ThemeData darkTheme = ThemeData(
 
   // ✏️ Text Theme
   textTheme: TextTheme(
-    displayLarge: GoogleFonts.poppins(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
-    displayMedium: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-    displaySmall: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+    displayLarge: GoogleFonts.poppins(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+    displayMedium: GoogleFonts.poppins(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+    displaySmall: GoogleFonts.poppins(
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      color: Colors.white,
+    ),
 
     titleLarge: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
-    titleMedium: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+    titleMedium: GoogleFonts.poppins(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: Colors.white,
+    ),
 
     bodyLarge: GoogleFonts.poppins(fontSize: 14, color: Colors.white),
     bodyMedium: GoogleFonts.poppins(fontSize: 12, color: Colors.white70),

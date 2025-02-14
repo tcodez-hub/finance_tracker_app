@@ -17,7 +17,9 @@ class _CalendarChoiceState extends State<CaldendarSegmentButton> {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black.withAlpha(50), offset: Offset(0, 2), blurRadius: 8)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withAlpha(50), offset: Offset(0, 2), blurRadius: 8),
+        ],
         border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2),
       ),
       child: SegmentedButton<Calendar>(

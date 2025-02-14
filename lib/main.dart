@@ -1,10 +1,12 @@
 import 'package:finance_tracker_app/app.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/theme.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(BlocProvider(create: (_) => NavigationCubit(), child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
