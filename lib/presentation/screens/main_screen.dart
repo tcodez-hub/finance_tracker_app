@@ -1,14 +1,15 @@
+import 'package:finance_tracker_app/config/routes.dart';
 import 'package:finance_tracker_app/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'presentation/screens/analytics_screen.dart';
-import 'presentation/screens/saving_screen.dart';
-import 'presentation/screens/transaction_history_screen.dart';
-import 'statemanagement/cubit/navigation_cubit.dart';
+import 'analytics_screen.dart';
+import 'saving_screen.dart';
+import 'transaction_history_screen.dart';
+import '../../statemanagement/cubit/navigation_cubit.dart';
 
-class App extends StatelessWidget {
-  App({super.key});
+class MainScreen extends StatelessWidget {
+  MainScreen({super.key});
 
   final List<Widget> _screens = [
     HomeScreen(),
@@ -27,7 +28,12 @@ class App extends StatelessWidget {
             return Text(_screennames[currentIndex]);
           },
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.settings))],
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed(context, AppRoute.settings),
+            icon: Icon(Icons.settings),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

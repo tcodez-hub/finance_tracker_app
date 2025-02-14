@@ -28,9 +28,15 @@ final ThemeData lightTheme = ThemeData(
   // 🎯 IconButton Theme
   iconButtonTheme: IconButtonThemeData(
     style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all(Color(0xFF2973B2)), // Primary color
-      backgroundColor: WidgetStateProperty.all(Colors.transparent), // No background
-      overlayColor: WidgetStateProperty.all(Color(0xFF48A6A7)), // Light blue on press
+      foregroundColor: WidgetStateProperty.all(
+        Color(0xFF2973B2),
+      ), // Primary color
+      backgroundColor: WidgetStateProperty.all(
+        Colors.transparent,
+      ), // No background
+      overlayColor: WidgetStateProperty.all(
+        Color(0xFF48A6A7),
+      ), // Light blue on press
     ),
   ),
 
@@ -39,9 +45,15 @@ final ThemeData lightTheme = ThemeData(
       animationDuration: Duration(milliseconds: 10),
       textStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return GoogleFonts.poppins(fontSize: 14, color: Color(0xFFF2EFE7)); // Selected state
+          return GoogleFonts.poppins(
+            fontSize: 14,
+            color: Color(0xFFF2EFE7),
+          ); // Selected state
         }
-        return GoogleFonts.poppins(fontSize: 14, color: Colors.black); // Default unselected state
+        return GoogleFonts.poppins(
+          fontSize: 14,
+          color: Colors.black,
+        ); // Default unselected state
       }),
       backgroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
@@ -60,7 +72,7 @@ final ThemeData lightTheme = ThemeData(
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      padding: WidgetStateProperty.all(EdgeInsets.all(4)),
+      padding: WidgetStateProperty.all(EdgeInsets.all(8)),
     ),
   ),
 
@@ -82,7 +94,11 @@ final ThemeData lightTheme = ThemeData(
       color: Colors.black,
     ),
 
-    titleLarge: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
+    titleLarge: GoogleFonts.poppins(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+    ),
     titleMedium: GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.w500,
@@ -96,36 +112,91 @@ final ThemeData lightTheme = ThemeData(
     labelLarge: GoogleFonts.poppins(fontSize: 28, color: Color(0xFFF2EFE7)),
     labelSmall: GoogleFonts.poppins(fontSize: 14, color: Color(0xFFF2EFE7)),
   ),
+  dividerTheme: DividerThemeData(
+    color: Color(0xFF48A6A7).withAlpha(100),
+    indent: 16,
+    endIndent: 16,
+  ),
 );
 
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
 
   colorScheme: ColorScheme.dark(
-    primary: Color(0xFF9ACBD0), // Light Teal
+    primary: Color(0xFF9ACBD0), // Light Teal for accents
     onPrimary: Colors.black,
-    primaryContainer: Color(0xFF2973B2), // Deep Blue
+    primaryContainer: Color(0xFF2973B2), // Deep Blue for contrast
     onPrimaryContainer: Colors.white,
 
-    secondary: Color(0xFF48A6A7), // Teal
+    secondary: Color(0xFF48A6A7), // Teal remains for consistency
     onSecondary: Colors.black,
     secondaryContainer: Color(0xFF2973B2),
     onSecondaryContainer: Colors.white,
 
-    surface: Color(0xFF121212), // Dark Gray
-    onSurface: Color(0xFFF2EFE7), // Off-White for readability
+    surface: Color(0xFF121212), // Dark background
+    onSurface: Colors.white,
+    surfaceContainer: Color(0xFF1E1E1E), // Slightly lighter dark for depth
   ),
 
-  // 🎯 IconButton Theme
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    foregroundColor: Color(0xFF121212),
+    backgroundColor: Color(0xFF9ACBD0),
+    shape: CircleBorder(),
+  ),
+
+  // 🎯 IconButton Theme (Dark Mode)
   iconButtonTheme: IconButtonThemeData(
     style: ButtonStyle(
-      foregroundColor: WidgetStateProperty.all(Color(0xFF9ACBD0)), // Light Teal
-      backgroundColor: WidgetStateProperty.all(Colors.transparent),
-      overlayColor: WidgetStateProperty.all(Color(0x809ACBD0)), // Light teal on press
+      foregroundColor: WidgetStateProperty.all(
+        Color(0xFF9ACBD0),
+      ), // Light Teal for visibility
+      backgroundColor: WidgetStateProperty.all(
+        Colors.transparent,
+      ), // No background
+      overlayColor: WidgetStateProperty.all(
+        Color(0xFF48A6A7),
+      ), // Soft Teal on press
     ),
   ),
 
-  // ✏️ Text Theme
+  // 🔳 Segmented Button Theme
+  segmentedButtonTheme: SegmentedButtonThemeData(
+    style: ButtonStyle(
+      animationDuration: Duration(milliseconds: 10),
+      textStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return GoogleFonts.poppins(
+            fontSize: 14,
+            color: Color(0xFF121212),
+          ); // Dark background for contrast
+        }
+        return GoogleFonts.poppins(
+          fontSize: 14,
+          color: Colors.white,
+        ); // Default light text
+      }),
+      backgroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return Color(0xFF9ACBD0); // Light Teal for selection
+        }
+        return Color(0xFF1E1E1E); // Dark background
+      }),
+      foregroundColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return Color(0xFF121212); // Dark mode contrast
+        }
+        return Colors.white; // Unselected text color
+      }),
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      side: WidgetStateProperty.all(BorderSide(style: BorderStyle.none)),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      padding: WidgetStateProperty.all(EdgeInsets.all(8)),
+    ),
+  ),
+
+  // ✏️ Text Theme (Same font sizes as Light Theme)
   textTheme: TextTheme(
     displayLarge: GoogleFonts.poppins(
       fontSize: 32,
@@ -143,7 +214,11 @@ final ThemeData darkTheme = ThemeData(
       color: Colors.white,
     ),
 
-    titleLarge: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+    titleLarge: GoogleFonts.poppins(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: Colors.white,
+    ),
     titleMedium: GoogleFonts.poppins(
       fontSize: 16,
       fontWeight: FontWeight.w500,
@@ -152,5 +227,14 @@ final ThemeData darkTheme = ThemeData(
 
     bodyLarge: GoogleFonts.poppins(fontSize: 14, color: Colors.white),
     bodyMedium: GoogleFonts.poppins(fontSize: 12, color: Colors.white70),
+
+    labelMedium: GoogleFonts.poppins(fontSize: 18, color: Color(0xFF9ACBD0)),
+    labelLarge: GoogleFonts.poppins(fontSize: 28, color: Color(0xFF9ACBD0)),
+    labelSmall: GoogleFonts.poppins(fontSize: 14, color: Color(0xFF9ACBD0)),
+  ),
+  dividerTheme: DividerThemeData(
+    color: Color(0xFF48A6A7).withAlpha(100),
+    indent: 16,
+    endIndent: 16,
   ),
 );
