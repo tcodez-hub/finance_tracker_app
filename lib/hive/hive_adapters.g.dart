@@ -17,7 +17,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Transaction(
-      id: (fields[0] as num).toInt(),
+      id: (fields[6] as num).toInt(),
       amount: (fields[1] as num).toDouble(),
       type: fields[2] as String,
       category: fields[3] as String,
@@ -30,8 +30,6 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
   void write(BinaryWriter writer, Transaction obj) {
     writer
       ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.id)
       ..writeByte(1)
       ..write(obj.amount)
       ..writeByte(2)
@@ -41,7 +39,9 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       ..writeByte(4)
       ..write(obj.date)
       ..writeByte(5)
-      ..write(obj.notes);
+      ..write(obj.notes)
+      ..writeByte(6)
+      ..write(obj.id);
   }
 
   @override
@@ -51,6 +51,31 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TransactionAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class SettingModelAdapter extends TypeAdapter<SettingModel> {
+  @override
+  final int typeId = 1;
+
+  @override
+  SettingModel read(BinaryReader reader) {
+    return SettingModel();
+  }
+
+  @override
+  void write(BinaryWriter writer, SettingModel obj) {
+    writer.writeByte(0);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SettingModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

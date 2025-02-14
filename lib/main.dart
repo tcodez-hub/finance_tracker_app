@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
 import 'package:finance_tracker_app/config/routes.dart';
 import 'package:finance_tracker_app/hive/hive_registrar.g.dart';
 import 'package:finance_tracker_app/models/transaction_model.dart';
@@ -15,10 +16,10 @@ import 'core/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final Directory dir = await getApplicationDocumentsDirectory();
   Hive
-    ..init(Directory.current.path)
+    ..init(dir.path)
     ..registerAdapters();
-
   final transactionBox = await Hive.openBox<Transaction>('transactions');
   runApp(
     MultiBlocProvider(

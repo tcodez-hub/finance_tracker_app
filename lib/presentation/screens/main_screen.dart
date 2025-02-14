@@ -17,7 +17,12 @@ class MainScreen extends StatelessWidget {
     SavingScreen(),
     TransactionHistoryScreen(),
   ];
-  final List<String> _screennames = ["Overview", "Analytics", "Savings", "Transactions"];
+  final List<String> _screennames = [
+    "Overview",
+    "Analytics",
+    "Savings",
+    "Transactions",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,10 @@ class MainScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, AppRoute.transaction),
+        child: Icon(Icons.add),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: BlocBuilder<NavigationCubit, int>(
         builder: (context, currentIndex) {
@@ -54,9 +62,18 @@ class MainScreen extends StatelessWidget {
               },
               items: [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Analytics'),
-                BottomNavigationBarItem(icon: Icon(Icons.savings), label: 'Saving'),
-                BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Transactions'),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.bar_chart),
+                  label: 'Analytics',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.savings),
+                  label: 'Saving',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.history),
+                  label: 'Transactions',
+                ),
               ],
             );
           },

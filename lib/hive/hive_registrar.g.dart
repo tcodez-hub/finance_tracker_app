@@ -7,6 +7,7 @@ import 'package:finance_tracker_app/hive/hive_adapters.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
+    registerAdapter(SettingModelAdapter());
     registerAdapter(TransactionAdapter());
   }
 }
