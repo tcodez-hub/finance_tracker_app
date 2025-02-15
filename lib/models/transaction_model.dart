@@ -6,7 +6,8 @@ class Transaction extends HiveObject {
   double amount;
   String type;
   String category;
-  DateTime date;
+  String subcategory;
+  String datetime;
   String notes;
 
   Transaction({
@@ -14,7 +15,8 @@ class Transaction extends HiveObject {
     required this.amount,
     required this.type,
     required this.category,
-    required this.date,
+    required this.subcategory,
+    required this.datetime,
     required this.notes,
   });
 }

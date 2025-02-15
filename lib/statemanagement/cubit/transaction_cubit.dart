@@ -30,6 +30,14 @@ class TransactionCubit extends Cubit<TransactionState> {
     }
   }
 
+  int getTransactionBoxLength() {
+    return transactionBox.values.length;
+  }
+
+  Transaction? getTransactionById(int id) {
+    return transactionBox.get(id);
+  }
+
   /// 🔹 Delete a transaction
   Future<void> deleteTransaction(int id) async {
     await transactionBox.delete(id);

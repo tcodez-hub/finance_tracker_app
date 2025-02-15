@@ -72,7 +72,7 @@ final ThemeData lightTheme = ThemeData(
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      padding: WidgetStateProperty.all(EdgeInsets.all(8)),
+      padding: WidgetStateProperty.all(EdgeInsets.all(2)),
     ),
   ),
 
@@ -116,6 +116,21 @@ final ThemeData lightTheme = ThemeData(
     color: Color(0xFF48A6A7).withAlpha(100),
     indent: 16,
     endIndent: 16,
+  ),
+  tabBarTheme: TabBarThemeData(
+    labelStyle: GoogleFonts.poppins(fontSize: 14, color: Color(0xFF2973B2)),
+  ),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFF2973B2), // Primary color
+      foregroundColor: Colors.white, // Text color
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      textStyle: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      minimumSize: Size(double.infinity, 50),
+      elevation: 4,
+    ),
   ),
 );
 
@@ -192,7 +207,7 @@ final ThemeData darkTheme = ThemeData(
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      padding: WidgetStateProperty.all(EdgeInsets.all(8)),
+      padding: WidgetStateProperty.all(EdgeInsets.all(2)),
     ),
   ),
 
@@ -236,5 +251,19 @@ final ThemeData darkTheme = ThemeData(
     color: Color(0xFF48A6A7).withAlpha(100),
     indent: 16,
     endIndent: 16,
+  ),
+  tabBarTheme: TabBarThemeData(
+    labelStyle: GoogleFonts.poppins(fontSize: 14, color: Color(0xFF9ACBD0)),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFF48A6A7), // Light teal for contrast
+      foregroundColor: Color(0xFFF2EFE7), // Text color
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+      textStyle: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      minimumSize: Size(double.infinity, 50),
+      elevation: 4,
+    ),
   ),
 );
