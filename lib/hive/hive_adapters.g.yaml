@@ -5,7 +5,7 @@ nextTypeId: 2
 types:
   Transaction:
     typeId: 0
-    nextIndex: 9
+    nextIndex: 11
     fields:
       amount:
         index: 1
@@ -19,8 +19,10 @@ types:
         index: 6
       subcategory:
         index: 7
-      datetime:
-        index: 8
+      date:
+        index: 9
+      time:
+        index: 10
   SettingModel:
     typeId: 1
     nextIndex: 0

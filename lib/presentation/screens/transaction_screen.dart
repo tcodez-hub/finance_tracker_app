@@ -25,17 +25,18 @@ class _TransactionScreenState extends State<TransactionScreen> {
     SavingTransaction(),
   ];
   DateTime? selectedDate;
+  TimeOfDay? selectedTime;
   TextEditingController amountController = TextEditingController();
   TextEditingController notesController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
-
+  late Transaction transaction;
   late TransactionPageCubit cubit;
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
@@ -43,9 +44,28 @@ class _TransactionScreenState extends State<TransactionScreen> {
     if (pickedDate != null) {
       setState(() {
         selectedDate = pickedDate;
-        dateController.text = DateFormat(
-          'yyyy-MM-dd',
-        ).format(pickedDate); // Formatting date
+        dateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+        transaction.date = dateController.text;
+        context.read<TransactionPageCubit>().updateTransactionPage(transaction);
+        log(transaction.date);
+      });
+    }
+  }
+
+  // Function to pick a time
+  Future<void> _selectTime(BuildContext context) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        selectedTime = pickedTime;
+        timeController.text = pickedTime.format(context);
+        transaction.time = timeController.text;
+        context.read<TransactionPageCubit>().updateTransactionPage(transaction);
+        log(transaction.time);
       });
     }
   }
@@ -59,15 +79,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
         type: type[0].transactionTypeName,
         category: "",
         subcategory: "",
-        datetime: DateTime.now().toIso8601String(),
+        date: DateTime.now().toIso8601String(),
+        time: DateFormat('HH:mm a').format(DateTime.now()),
         notes: "",
       ),
     );
 
+    transaction = cubit.transaction;
     amountController.text = cubit.transaction.amount.toString();
-    DateTime dateTime = DateTime.parse(cubit.transaction.datetime);
+    DateTime dateTime = DateTime.parse(cubit.transaction.date);
     String date = DateFormat('yyyy-MM-dd').format(dateTime);
-    String time = DateFormat('HH:mm a').format(dateTime);
+    String time = cubit.transaction.time;
     dateController.text = date;
     timeController.text = time;
     super.initState();
@@ -119,6 +141,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             amountController.text = "";
                           }
                         },
+                        onChanged: (value) {
+                          transaction.amount = double.parse(value);
+                          context
+                              .read<TransactionPageCubit>()
+                              .updateTransactionPage(transaction);
+                          log(transaction.amount.toString());
+                        },
                       ),
                       TextField(
                         decoration: InputDecoration(
@@ -128,6 +157,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         maxLines: 5,
                         minLines: 1,
                         controller: notesController,
+                        onChanged: (value) {
+                          transaction.notes = value;
+                          context
+                              .read<TransactionPageCubit>()
+                              .updateTransactionPage(transaction);
+                          log(transaction.notes.toString());
+                        },
                       ),
                       TextField(
                         decoration: InputDecoration(
@@ -136,6 +172,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         ),
                         readOnly: true,
                         controller: dateController,
+                        onTap: () {
+                          _selectDate(context);
+                        },
                       ),
                       TextField(
                         decoration: InputDecoration(
@@ -144,6 +183,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         ),
                         readOnly: true,
                         controller: timeController,
+                        onTap: () {
+                          _selectTime(context);
+                        },
                       ),
                       ElevatedButton(onPressed: () {}, child: Text("Add")),
                     ],
