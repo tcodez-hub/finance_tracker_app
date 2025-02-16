@@ -8,8 +8,9 @@ part 'money_flow_state.dart';
 
 class MoneyFlowCubit extends Cubit<MoneyFlowState> {
   final MoneyFlowModel moneyFlowModel;
-  final TransactionCubit transactionCubit;
 
-  MoneyFlowCubit(this.moneyFlowModel, this.transactionCubit)
-    : super(MoneyFlowInitial());
+  MoneyFlowCubit(this.moneyFlowModel) : super(MoneyFlowInitial());
+
+  void updateMoneyByTransaction(List<Transaction> transaction) {}
+  void updateMoneyByTimePeriod(DateTime start, DateTime end) {}
 }

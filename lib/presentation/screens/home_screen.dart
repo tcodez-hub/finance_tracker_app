@@ -10,29 +10,6 @@ class HomeScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("This month", style: TextTheme.of(context).bodyLarge),
-                    Text(
-                      "Februrary 2025",
-                      style: TextTheme.of(context).bodyMedium,
-                    ),
-                  ],
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.filter_list_rounded),
-                ),
-              ],
-            ),
-          ),
-          //CaldendarSegmentButton(),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),

@@ -1,18 +1,23 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance_tracker_app/models/moneyflow_model.dart';
 import 'package:finance_tracker_app/models/transaction_model.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/money_flow_cubit.dart';
 import 'package:hive_ce/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
 part 'transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
   final Box<Transaction> transactionBox;
-  TransactionCubit(this.transactionBox) : super(TransactionInitial());
+  final MoneyFlowCubit moneyFlowCubit;
+  TransactionCubit(this.transactionBox, this.moneyFlowCubit)
+    : super(TransactionInitial());
 
   /// 🔹 Load all transactions from Hive
   void loadTransactions() {
     final transactions = transactionBox.values.toList();
+    moneyFlowCubit.updateMoneyByTransaction(transactions);
     emit(TransactionLoaded(transactions));
   }
 
@@ -28,6 +33,23 @@ class TransactionCubit extends Cubit<TransactionState> {
       await transaction.save();
       loadTransactions();
     }
+  }
+
+  void loadFilterTransaction(DateTime start, DateTime end) {
+    final transactionBox = Hive.box<Transaction>('transactions');
+
+    final filteredTransactions =
+        transactionBox.values.where((transaction) {
+          // Convert string date to DateTime
+          DateTime transactionDate = DateFormat(
+            "yyyy-MM-dd",
+          ).parse(transaction.date);
+
+          // Check if the transaction falls within the range
+          return transactionDate.isAfter(start.subtract(Duration(days: 1))) &&
+              transactionDate.isBefore(end.add(Duration(days: 1)));
+        }).toList();
+    emit(TransactionLoaded(filteredTransactions));
   }
 
   int getTransactionBoxLength() {

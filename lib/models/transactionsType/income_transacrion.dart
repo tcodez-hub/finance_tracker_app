@@ -3,7 +3,11 @@ import 'package:finance_tracker_app/models/transactionsType/transactions_type.da
 import 'package:flutter/material.dart';
 
 class IncomeTransacrion extends TransactionType {
-  static List<CategoryModel> incomeSource = [
+  @override
+  String transactionTypeName = "Income";
+
+  @override
+  List<CategoryModel> categories = [
     CategoryModel(
       name: "Salary",
       color: Colors.blue.shade500,
@@ -23,7 +27,4 @@ class IncomeTransacrion extends TransactionType {
       subcategories: List.empty(),
     ),
   ];
-
-  @override
-  String transactionTypeName = "Income";
 }

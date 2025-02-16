@@ -188,6 +188,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           _selectTime(context);
                         },
                       ),
+
                       ElevatedButton(onPressed: () {}, child: Text("Add")),
                     ],
                   ),

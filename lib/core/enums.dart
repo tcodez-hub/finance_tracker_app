@@ -1,1 +1,1 @@
-enum Calendar { day, week, month, year, all }
+enum Calendar { day, week, month, year, all, custom }

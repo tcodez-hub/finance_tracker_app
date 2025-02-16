@@ -3,7 +3,11 @@ import 'package:finance_tracker_app/models/transactionsType/transactions_type.da
 import 'package:flutter/material.dart';
 
 class ExpenseTransaction extends TransactionType {
-  static List<CategoryModel> expenses = [
+  @override
+  String transactionTypeName = "Expense";
+
+  @override
+  List<CategoryModel> categories = [
     CategoryModel(
       name: "Food&Drinks",
       color: Colors.red.shade400,
@@ -29,7 +33,4 @@ class ExpenseTransaction extends TransactionType {
       subcategories: ["Rent", "Maintance", "Mortgage", "Utilities"],
     ),
   ];
-
-  @override
-  String transactionTypeName = "Expense";
 }

@@ -1,10 +1,16 @@
 class MoneyFlowModel {
-  double income = 0;
-  double expense = 0;
-  double saving = 0;
+  double totalIncome = 0;
+  double totalExpense = 0;
+  double totalSaving = 0;
   double totalBalance = 0;
 
+  double visualIncome = 0;
+  double visualExpense = 0;
+  double visualSaving = 0;
+  double visualBalance = 0;
+
   void calculateTotalBalance() {
-    totalBalance = income - expense - saving;
+    totalBalance = totalIncome - totalExpense - totalSaving;
+    visualBalance = visualIncome - visualExpense - visualSaving;
   }
 }
