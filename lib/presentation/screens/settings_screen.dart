@@ -1,4 +1,6 @@
+import 'package:finance_tracker_app/statemanagement/cubit/setting_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -6,63 +8,103 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Settings")),
+      appBar: AppBar(title: const Text("Settings")),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
         children: [
           ListTile(
-            leading: Icon(Icons.language_rounded),
-            title: Text("Language"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
-            subtitle: Text("English"),
-            subtitleTextStyle: TextTheme.of(context).bodyMedium,
+            leading: const Icon(Icons.language_rounded),
+            title: const Text("Language"),
+            subtitle: const Text("English"),
+            onTap: () {
+              // Open language selection dialog (to be implemented)
+            },
           ),
           ListTile(
-            leading: Icon(Icons.currency_exchange),
-            title: Text("Currency"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
-            subtitle: Text("USD"),
-            subtitleTextStyle: TextTheme.of(context).bodyMedium,
+            leading: const Icon(Icons.currency_exchange),
+            title: const Text("Currency"),
+            subtitle: const Text("USD"),
+            onTap: () {
+              // Open currency selection dialog (to be implemented)
+            },
           ),
           ListTile(
-            leading: Icon(Icons.contrast_rounded),
-            title: Text("Theme"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
-            subtitle: Text("System"),
-            subtitleTextStyle: TextTheme.of(context).bodyMedium,
+            leading: const Icon(Icons.contrast_rounded),
+            title: const Text("Theme"),
+            subtitle: BlocBuilder<SettingCubit, SettingState>(
+              builder: (context, state) {
+                return Text(_themeName(state.themeMode));
+              },
+            ),
+            onTap: () {
+              _showThemeDialog(context);
+            },
           ),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text("Notification"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
+            leading: const Icon(Icons.notifications),
+            title: const Text("Notification"),
           ),
           ListTile(
-            leading: Icon(Icons.upload_file_rounded),
-            title: Text("Export"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
+            leading: const Icon(Icons.upload_file_rounded),
+            title: const Text("Export"),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.send),
-            title: Text("Send Feedback"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
-            subtitle: Text("xyz@abc.com"),
-            subtitleTextStyle: TextTheme.of(context).bodyMedium,
+            leading: const Icon(Icons.send),
+            title: const Text("Send Feedback"),
+            subtitle: const Text("xyz@abc.com"),
           ),
           ListTile(
-            leading: Icon(Icons.open_in_new_rounded),
-            title: Text("Privacy Policy"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
+            leading: const Icon(Icons.open_in_new_rounded),
+            title: const Text("Privacy Policy"),
           ),
           ListTile(
-            leading: Icon(Icons.info_rounded),
-            title: Text("App Version"),
-            titleTextStyle: TextTheme.of(context).bodyLarge,
-            subtitle: Text("0.0.1"),
-            subtitleTextStyle: TextTheme.of(context).bodyMedium,
+            leading: const Icon(Icons.info_rounded),
+            title: const Text("App Version"),
+            subtitle: const Text("0.0.1"),
           ),
         ],
       ),
     );
+  }
+
+  void _showThemeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Theme"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildThemeOption(context, "System", ThemeMode.system),
+              _buildThemeOption(context, "Light", ThemeMode.light),
+              _buildThemeOption(context, "Dark", ThemeMode.dark),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildThemeOption(BuildContext context, String title, ThemeMode mode) {
+    return ListTile(
+      title: Text(title),
+      onTap: () {
+        context.read<SettingCubit>().changeTheme(mode);
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  String _themeName(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return "Light";
+      case ThemeMode.dark:
+        return "Dark";
+      default:
+        return "System";
+    }
   }
 }

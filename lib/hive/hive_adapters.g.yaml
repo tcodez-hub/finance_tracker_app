@@ -5,25 +5,25 @@ nextTypeId: 2
 types:
   Transaction:
     typeId: 0
-    nextIndex: 11
+    nextIndex: 7
     fields:
+      id:
+        index: 0
       amount:
         index: 1
       type:
         index: 2
       category:
         index: 3
-      notes:
-        index: 5
-      id:
-        index: 6
-      subcategory:
-        index: 7
       date:
-        index: 9
+        index: 4
       time:
-        index: 10
+        index: 5
+      notes:
+        index: 6
   SettingModel:
     typeId: 1
-    nextIndex: 0
-    fields: {}
+    nextIndex: 1
+    fields:
+      themeMode:
+        index: 0

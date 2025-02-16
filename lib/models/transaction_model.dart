@@ -6,7 +6,6 @@ class Transaction extends HiveObject {
   double amount;
   String type;
   String category;
-  String subcategory;
   String date;
   String time;
   String notes;
@@ -16,9 +15,12 @@ class Transaction extends HiveObject {
     required this.amount,
     required this.type,
     required this.category,
-    required this.subcategory,
     required this.date,
     required this.time,
     required this.notes,
   });
+  @override
+  String toString() {
+    return 'Transaction(id: $id, amount: $amount, type: $type, category: $category, date: $date, time: $time, notes: $notes)';
+  }
 }

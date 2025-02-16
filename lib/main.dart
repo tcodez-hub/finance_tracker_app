@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:finance_tracker_app/models/moneyflow_model.dart';
 import 'package:finance_tracker_app/statemanagement/cubit/filter_time_cubit.dart';
 import 'package:finance_tracker_app/statemanagement/cubit/money_flow_cubit.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/setting_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:finance_tracker_app/config/routes.dart';
 import 'package:finance_tracker_app/hive/hive_registrar.g.dart';
@@ -23,8 +24,12 @@ void main() async {
   Hive
     ..init(dir.path)
     ..registerAdapters();
+
+  final settingsBox = await Hive.openBox('settings');
   final transactionBox = await Hive.openBox<Transaction>('transactions');
+
   final moneyflowCubit = MoneyFlowCubit(MoneyFlowModel());
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -34,8 +39,11 @@ void main() async {
           create: (_) => TransactionCubit(transactionBox, moneyflowCubit),
         ),
         BlocProvider(create: (_) => FilterTimeCubit()),
+        BlocProvider(
+          create: (_) => SettingCubit(settingsBox),
+        ), // Added SettingCubit
       ],
-      child: MainApp(),
+      child: const MainApp(),
     ),
   );
 }
@@ -45,14 +53,18 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
-      routes: AppRoute.getRoutes(),
-      initialRoute: AppRoute.main,
-      home: MainScreen(),
+    return BlocBuilder<SettingCubit, SettingState>(
+      builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: state.themeMode,
+          routes: AppRoute.getRoutes(),
+          initialRoute: AppRoute.main,
+          home: MainScreen(),
+        );
+      },
     );
   }
 }
