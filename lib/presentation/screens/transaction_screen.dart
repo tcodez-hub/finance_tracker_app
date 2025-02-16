@@ -12,7 +12,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({super.key});
+  TransactionScreen({super.key, this.transaction});
+
+  Transaction? transaction;
 
   @override
   State<TransactionScreen> createState() => _TransactionScreenState();
@@ -72,20 +74,19 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   void initState() {
-    cubit = TransactionPageCubit(
-      Transaction(
-        id: context.read<TransactionCubit>().getTransactionBoxLength() + 1,
-        amount: 0,
-        type: type[0].transactionTypeName,
-        category: "",
-        subcategory: "",
-        date: DateTime.now().toIso8601String(),
-        time: DateFormat('HH:mm a').format(DateTime.now()),
-        notes: "",
-      ),
-    );
-
-    transaction = cubit.transaction;
+    transaction =
+        widget.transaction ??
+        Transaction(
+          id: context.read<TransactionCubit>().getTransactionBoxLength() + 1,
+          amount: 0,
+          type: type[0].transactionTypeName,
+          category: "",
+          subcategory: "",
+          date: DateTime.now().toIso8601String(),
+          time: DateFormat('HH:mm a').format(DateTime.now()),
+          notes: "",
+        );
+    cubit = TransactionPageCubit(transaction);
     amountController.text = cubit.transaction.amount.toString();
     DateTime dateTime = DateTime.parse(cubit.transaction.date);
     String date = DateFormat('yyyy-MM-dd').format(dateTime);

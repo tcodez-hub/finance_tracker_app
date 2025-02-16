@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:finance_tracker_app/models/moneyflow_model.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/money_flow_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:finance_tracker_app/config/routes.dart';
 import 'package:finance_tracker_app/hive/hive_registrar.g.dart';
@@ -21,13 +23,15 @@ void main() async {
     ..init(dir.path)
     ..registerAdapters();
   final transactionBox = await Hive.openBox<Transaction>('transactions');
+  TransactionCubit transactionCubit = TransactionCubit(transactionBox);
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => NavigationCubit()),
+        BlocProvider(create: (_) => transactionCubit),
         BlocProvider(
-          create: (_) => TransactionCubit(transactionBox),
-        ), // Add TransactionCubit here
+          create: (_) => MoneyFlowCubit(MoneyFlowModel(), transactionCubit),
+        ),
       ],
       child: MainApp(),
     ),

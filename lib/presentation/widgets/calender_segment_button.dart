@@ -18,9 +18,16 @@ class _CalendarChoiceState extends State<CaldendarSegmentButton> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
-          BoxShadow(color: Colors.black.withAlpha(50), offset: Offset(0, 2), blurRadius: 8),
+          BoxShadow(
+            color: Colors.black.withAlpha(50),
+            offset: Offset(0, 2),
+            blurRadius: 8,
+          ),
         ],
-        border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primary,
+          width: 2,
+        ),
       ),
       child: SegmentedButton<Calendar>(
         segments: const <ButtonSegment<Calendar>>[
@@ -28,7 +35,7 @@ class _CalendarChoiceState extends State<CaldendarSegmentButton> {
           ButtonSegment<Calendar>(value: Calendar.week, label: Text('Week')),
           ButtonSegment<Calendar>(value: Calendar.month, label: Text('Month')),
           ButtonSegment<Calendar>(value: Calendar.year, label: Text('Year')),
-          ButtonSegment<Calendar>(value: Calendar.custom, label: Text('Custom')),
+          ButtonSegment<Calendar>(value: Calendar.all, label: Text('All')),
         ],
         selected: <Calendar>{calendarView},
         showSelectedIcon: false,

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:finance_tracker_app/models/moneyflow_model.dart';
 import 'package:finance_tracker_app/models/transaction_model.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +8,6 @@ part 'transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
   final Box<Transaction> transactionBox;
-
   TransactionCubit(this.transactionBox) : super(TransactionInitial());
 
   /// 🔹 Load all transactions from Hive

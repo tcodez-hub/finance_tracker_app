@@ -1,5 +1,6 @@
 import 'package:finance_tracker_app/config/routes.dart';
 import 'package:finance_tracker_app/presentation/screens/home_screen.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/transaction_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +42,10 @@ class MainScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, AppRoute.transaction),
+        onPressed: () {
+          context.read<TransactionCubit>().loadTransactions();
+          Navigator.pushNamed(context, AppRoute.transaction);
+        },
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -59,6 +63,7 @@ class MainScreen extends StatelessWidget {
               currentIndex: currentIndex,
               onTap: (index) {
                 context.read<NavigationCubit>().changeTab(index);
+                context.read<TransactionCubit>().loadTransactions();
               },
               items: [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
