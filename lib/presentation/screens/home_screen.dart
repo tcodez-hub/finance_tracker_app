@@ -10,8 +10,29 @@ class HomeScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: 16,),
-          CaldendarSegmentButton(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("This month", style: TextTheme.of(context).bodyLarge),
+                    Text(
+                      "Februrary 2025",
+                      style: TextTheme.of(context).bodyMedium,
+                    ),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.filter_list_rounded),
+                ),
+              ],
+            ),
+          ),
+          //CaldendarSegmentButton(),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -20,7 +41,10 @@ class HomeScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.circular(16),
               gradient: RadialGradient(
-                colors: [Theme.of(context).colorScheme.secondaryContainer, Theme.of(context).colorScheme.primary],
+                colors: [
+                  Theme.of(context).colorScheme.secondaryContainer,
+                  Theme.of(context).colorScheme.primary,
+                ],
                 focal: Alignment.topCenter,
                 radius: 1,
               ),
@@ -50,19 +74,31 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     MoneyOverviewCard(
                       title: 'Income',
-                      icon: Icon(Icons.trending_up_rounded, color: Theme.of(context).colorScheme.surface, size: 16),
+                      icon: Icon(
+                        Icons.trending_up_rounded,
+                        color: Theme.of(context).colorScheme.surface,
+                        size: 16,
+                      ),
                       iconColor: Colors.green.shade500,
                       body: "\$50000",
                     ),
                     MoneyOverviewCard(
                       title: 'Expense',
-                      icon: Icon(Icons.trending_down_rounded, color: Theme.of(context).colorScheme.surface, size: 16),
+                      icon: Icon(
+                        Icons.trending_down_rounded,
+                        color: Theme.of(context).colorScheme.surface,
+                        size: 16,
+                      ),
                       iconColor: Colors.red.shade500,
                       body: "\$50000",
                     ),
                     MoneyOverviewCard(
                       title: 'Saving',
-                      icon: Icon(Icons.favorite_outlined, color: Theme.of(context).colorScheme.surface, size: 16),
+                      icon: Icon(
+                        Icons.favorite_outlined,
+                        color: Theme.of(context).colorScheme.surface,
+                        size: 16,
+                      ),
                       iconColor: Colors.pink.shade400,
                       body: "\$50000",
                     ),
@@ -73,13 +109,27 @@ class HomeScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Align(alignment: Alignment.centerLeft, child: Text("Recent Transaction", style: TextTheme.of(context).titleMedium)),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Recent Transaction",
+                style: TextTheme.of(context).titleMedium,
+              ),
+            ),
           ),
           Container(
             height: 400,
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(28)),
-            child: Center(child: Text("No Transaction to show :(", style: TextTheme.of(context).bodyLarge)),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(28),
+            ),
+            child: Center(
+              child: Text(
+                "No Transaction to show :(",
+                style: TextTheme.of(context).bodyLarge,
+              ),
+            ),
           ),
         ],
       ),
