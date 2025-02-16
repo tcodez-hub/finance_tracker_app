@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:finance_tracker_app/statemanagement/cubit/filter_time_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -52,24 +53,36 @@ class _TransactionScreenState extends State<TransactionScreen> {
           type: type[0].transactionTypeName,
           category: type[0].categories[0].name,
           date: DateTime.now().toIso8601String(),
-          time: DateFormat('HH:mm a').format(DateTime.now()),
+          time: DateFormat('hh:mm a').format(DateTime.now()),
           notes: "",
         );
 
-    // Set the first category of the selected transaction type
-    final initialCategoryList = type[0].categories;
-    final initialCategory =
-        initialCategoryList.isNotEmpty
-            ? initialCategoryList.first
-            : CategoryModel(
-              name: '',
-              color: Colors.transparent,
-              icon: Icons.category,
-            );
+    // Determine the index of the transaction type
+    int typeIndex = type.indexWhere(
+      (t) => t.transactionTypeName == transaction.type,
+    );
+    typeIndex = typeIndex != -1 ? typeIndex : 0;
+
+    // Determine the initial category
+    final categoryList = type[typeIndex].categories;
+    final initialCategory = categoryList.firstWhere(
+      (c) => c.name == transaction.category,
+      orElse:
+          () =>
+              categoryList.isNotEmpty
+                  ? categoryList.first
+                  : CategoryModel(
+                    name: '',
+                    color: Colors.transparent,
+                    icon: Icons.category,
+                  ),
+    );
 
     cubit = TransactionPageCubit(transaction, initialCategory);
 
-    amountController.text = transaction.amount.toString();
+    // Initialize fields with transaction data
+    amountController.text =
+        transaction.amount == 0 ? '' : transaction.amount.toString();
     dateController.text = DateFormat(
       'yyyy-MM-dd',
     ).format(DateTime.parse(transaction.date));
@@ -82,10 +95,38 @@ class _TransactionScreenState extends State<TransactionScreen> {
     return BlocProvider(
       create: (context) => cubit,
       child: DefaultTabController(
+        initialIndex: type.indexWhere(
+          (t) => t.transactionTypeName == transaction.type,
+        ),
         length: type.length,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Add Transaction'),
+            title:
+                widget.transaction != null
+                    ? Text("Edit Transaction")
+                    : Text("Add Transaction"),
+            actions:
+                widget.transaction != null
+                    ? [
+                      IconButton(
+                        onPressed: () async {
+                          await context
+                              .read<TransactionCubit>()
+                              .deleteTransaction(transaction.id);
+                          if (!context.mounted) return;
+
+                          context
+                              .read<TransactionCubit>()
+                              .loadFilterTransaction(
+                                context.read<FilterTimeCubit>().start,
+                                context.read<FilterTimeCubit>().end,
+                              );
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.delete_forever),
+                      ),
+                    ]
+                    : [],
             bottom: TabBar(
               tabs: type.map((t) => Tab(text: t.transactionTypeName)).toList(),
               onTap: (index) {
@@ -146,7 +187,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     _buildCategorySelector(),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (cubit.transaction.amount == 0) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -157,9 +198,33 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           );
                         } else {
                           log(cubit.transaction.toString());
+
+                          final transactionCubit =
+                              context.read<TransactionCubit>();
+                          final filterTimeCubit =
+                              context.read<FilterTimeCubit>();
+
+                          if (widget.transaction == null) {
+                            await transactionCubit.addTransaction(
+                              cubit.transaction,
+                            );
+                          } else {
+                            await transactionCubit.updateTransaction(
+                              cubit.transaction,
+                            );
+                          }
+
+                          if (!context.mounted) return;
+
+                          transactionCubit.loadFilterTransaction(
+                            filterTimeCubit.start,
+                            filterTimeCubit.end,
+                          );
+
+                          Navigator.pop(context);
                         }
                       },
-                      child: const Text("Add"),
+                      child: const Text("Submit"),
                     ),
                   ],
                 );

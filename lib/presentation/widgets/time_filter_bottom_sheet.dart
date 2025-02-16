@@ -68,12 +68,12 @@ class FilterBottomSheet {
                   ListTile(
                     title: Text("All Time"),
                     onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Custom"),
-                    onTap: () {
+                      context.read<FilterTimeCubit>().start = DateTime(2000);
+                      context.read<FilterTimeCubit>().end = DateTime(2100);
+                      context.read<FilterTimeCubit>().resetoffset();
+                      context.read<FilterTimeCubit>().updateDateTime(
+                        Calendar.all,
+                      );
                       Navigator.pop(context);
                     },
                   ),

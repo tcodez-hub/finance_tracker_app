@@ -1,4 +1,5 @@
 import 'package:finance_tracker_app/statemanagement/cubit/setting_cubit.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/transaction_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,6 +48,13 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.upload_file_rounded),
             title: const Text("Export"),
+          ),
+          ListTile(
+            leading: const Icon(Icons.delete),
+            title: const Text("Reset"),
+            onTap: () {
+              context.read<TransactionCubit>().clearAll();
+            },
           ),
           const Divider(),
           ListTile(

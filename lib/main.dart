@@ -30,18 +30,21 @@ void main() async {
 
   final moneyflowCubit = MoneyFlowCubit(MoneyFlowModel());
 
+  final transactionCubit = TransactionCubit(transactionBox, moneyflowCubit);
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => NavigationCubit()),
         BlocProvider(create: (_) => moneyflowCubit),
         BlocProvider(
-          create: (_) => TransactionCubit(transactionBox, moneyflowCubit),
+          create: (_) {
+            return transactionCubit;
+          },
         ),
-        BlocProvider(create: (_) => FilterTimeCubit()),
         BlocProvider(
           create: (_) => SettingCubit(settingsBox),
         ), // Added SettingCubit
+        BlocProvider(create: (_) => FilterTimeCubit(transactionCubit)),
       ],
       child: const MainApp(),
     ),
@@ -60,7 +63,7 @@ class MainApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: state.themeMode,
-          routes: AppRoute.getRoutes(),
+          onGenerateRoute: AppRoute.onGenerateRoute,
           initialRoute: AppRoute.main,
           home: MainScreen(),
         );

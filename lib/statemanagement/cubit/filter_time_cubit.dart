@@ -3,13 +3,14 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:finance_tracker_app/core/custom_date_format.dart';
 import 'package:finance_tracker_app/core/enums.dart';
+import 'package:finance_tracker_app/statemanagement/cubit/transaction_cubit.dart';
 import 'package:meta/meta.dart';
 
 part 'filter_time_state.dart';
 
 class FilterTimeCubit extends Cubit<FilterTimeState> {
-  FilterTimeCubit() : super(FilterTimeInitial());
-
+  FilterTimeCubit(this.cubit) : super(FilterTimeInitial());
+  TransactionCubit cubit;
   int offset = 0;
   DateTime start = DateTime.now();
   DateTime end = DateTime.now();
@@ -29,8 +30,6 @@ class FilterTimeCubit extends Cubit<FilterTimeState> {
     var currentMonth = CustomDateFormat.currentMonth(monthOffset: offset);
     var currentYear = CustomDateFormat.currentYear(yearOffset: offset);
 
-    start = currentDay.start;
-    end = currentDay.end;
     String format = currentDay.formatted;
 
     if (calender == Calendar.day) {
@@ -53,9 +52,13 @@ class FilterTimeCubit extends Cubit<FilterTimeState> {
       end = currentYear.end;
       format = currentYear.formatted;
     }
+    if (calender == Calendar.all) {
+      format = "All time";
+    }
 
     log(start.toIso8601String());
     log(end.toIso8601String());
+    cubit.loadFilterTransaction(start, end);
     emit(
       FilterTimeUpdated(
         calendarMode: calender,

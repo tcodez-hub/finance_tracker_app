@@ -30,6 +30,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FilterTimeCubit>().updateDateTime(Calendar.day);
     return Scaffold(
       appBar: AppBar(
         title: BlocBuilder<NavigationCubit, int>(
@@ -46,7 +47,10 @@ class MainScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.read<TransactionCubit>().loadTransactions();
+          context.read<TransactionCubit>().loadFilterTransaction(
+            context.read<FilterTimeCubit>().start,
+            context.read<FilterTimeCubit>().end,
+          );
           Navigator.pushNamed(context, AppRoute.transaction);
         },
         child: Icon(Icons.add),
@@ -122,8 +126,11 @@ class MainScreen extends StatelessWidget {
             useLegacyColorScheme: false,
             currentIndex: currentIndex,
             onTap: (index) {
+              context.read<TransactionCubit>().loadFilterTransaction(
+                context.read<FilterTimeCubit>().start,
+                context.read<FilterTimeCubit>().end,
+              );
               context.read<NavigationCubit>().changeTab(index);
-              context.read<TransactionCubit>().loadTransactions();
             },
             items: [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

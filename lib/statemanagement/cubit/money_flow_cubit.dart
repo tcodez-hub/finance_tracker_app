@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance_tracker_app/models/moneyflow_model.dart';
 import 'package:finance_tracker_app/models/transaction_model.dart';
-import 'package:finance_tracker_app/statemanagement/cubit/transaction_cubit.dart';
 import 'package:meta/meta.dart';
 
 part 'money_flow_state.dart';
@@ -11,6 +10,19 @@ class MoneyFlowCubit extends Cubit<MoneyFlowState> {
 
   MoneyFlowCubit(this.moneyFlowModel) : super(MoneyFlowInitial());
 
-  void updateMoneyByTransaction(List<Transaction> transaction) {}
-  void updateMoneyByTimePeriod(DateTime start, DateTime end) {}
+  void updateMoney(List<Transaction> transactions) {
+    for (var transaction in transactions) {
+      if (transaction.type == "Income") {
+        moneyFlowModel.income += transaction.amount;
+      }
+      if (transaction.type == "Expense") {
+        moneyFlowModel.expense += transaction.amount;
+      }
+      if (transaction.type == "Saving") {
+        moneyFlowModel.saving += transaction.amount;
+      }
+    }
+    moneyFlowModel.calculateTotalBalance();
+    emit(MoneyFlowUpdated(moneyFlowModel));
+  }
 }
